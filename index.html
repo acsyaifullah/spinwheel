@@ -1,0 +1,120 @@
+<!--
+    Winhweel.js basic code wheel example by Douglas McKechie @ www.dougtesting.net
+    See website for tutorials and other documentation.
+
+    The MIT License (MIT)
+
+    Copyright (c) 2016 Douglas McKechie
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+-->
+<html>
+    <head>
+        <title>Spinwheel</title>
+        <link rel="stylesheet" href="main.css" type="text/css" />
+        <script type="text/javascript" src="spinwheel.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    </head>
+    <body>
+        <div align="center">
+            <table cellspacing="0" border="0" cellpadding="0">
+                <tr>
+                    <td><canvas id="canvas" class="tutCanvas" width="400" height="400">Canvas not supported</canvas></td>
+                    <td width="50%">
+                        <button id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;">Spin the Wheel</button>
+                        <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); drawTriangle(); bigButton.disabled=false;">Reset</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <script>
+            let theWheel = new Winwheel({
+                'numSegments'    : 5,
+                'outerRadius'    : 180,
+                'segments'       :
+                [
+                   {'fillStyle' : '#eae56f', 'text' : 'Hadiah 1'},
+                   {'fillStyle' : '#89f26e', 'text' : 'Hadiah 2'},
+                   {'fillStyle' : '#7de6ef', 'text' : 'Hadiah 3'},
+                   {'fillStyle' : '#e7706f', 'text' : 'Hadiah 4'},
+                   {'fillStyle' : '#eae', 'text' : 'Hadiah 5'}
+                ],
+                'animation' :
+                {
+                    'type'          : 'spinToStop',
+                    'duration'      : 5,
+                    'spins'         : 5,
+                    'callbackAfter' : 'drawTriangle()',
+                    'callbackFinished' : alertPrize
+                }
+            });
+         
+            // Function with formula to work out stopAngle before spinning animation.
+            // Called from Click of the Spin button.
+            function calculatePrize()
+            {
+                // This formula always makes the wheel stop somewhere inside prize 3 at least
+                // 1 degree away from the start and end edges of the segment.
+                // let stopAt = (30 + Math.floor((Math.random() * 43)))
+                
+                // Important thing is to set the stopAngle of the animation before stating the spin.
+                let stopAt = 0
+                do {
+                    stopAt = Math.floor((Math.random() * 359))
+                }
+                // while ((stopAt > 90 && stopAt < 135) || (stopAt > 315 && stopAt < 360)) // untuk 2 hadiah yang ditolak
+                while (stopAt > 144 && stopAt < 216) // untuk 1 hadiah yang ditolak
+                // console.log(stopAt)
+
+                theWheel.animation.stopAngle = stopAt;
+                
+                // May as well start the spin from here.
+                theWheel.startAnimation();
+                // alert(stopAt);
+            }
+         
+            // Usual pointer drawing code.
+            drawTriangle();
+         
+            function drawTriangle()
+            {
+                // Get the canvas context the wheel uses.
+                let ctx = theWheel.ctx;
+         
+                ctx.strokeStyle = 'black';     // Set line colour.
+                ctx.fillStyle   = 'grey';     // Set fill colour.
+                ctx.lineWidth   = 2;
+                ctx.beginPath();              // Begin path.
+                ctx.moveTo(180, 5);           // Move to initial position.
+                ctx.lineTo(220, 5);           // Draw lines to make the shape.
+                ctx.lineTo(200, 40);
+                ctx.lineTo(181, 5);
+                ctx.stroke();                 // Complete the path by stroking (draw lines).
+                ctx.fill();                   // Then fill.
+            }
+
+            function alertPrize(indicatedSegment)
+            {
+                // Do basic alert of the segment text.
+                alert("Selamat, kamu dapat " + indicatedSegment.text);
+            }
+         
+        </script>
+    </body>
+</html>
