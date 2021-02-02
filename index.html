@@ -20,6 +20,7 @@
 
   <script type="text/javascript" src="spinwheel.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <style type="text/css">
       .the_wheel
       {
@@ -27,6 +28,14 @@
           background-position: center;
           background-repeat: none;
           z-index: 999;
+      }
+      @media only screen and (min-width: 767px) {
+        .btnSpin {
+          padding-top: 200px;
+        }
+      }
+      .page-body-wrapper {
+        background-color: #c97a85!important;
       }
   </style>
 
@@ -67,22 +76,17 @@
 					
 					<div class="row">
 						
-						<div class="col-md-12 grid-margin stretch-card">
-							<div class="card text-center" style="background-color: #eff3f5!important; border: 0px!important">
-								<div class="card-body" style="margin: -37px 0;">
+						<div class="col-md-6 col-sm-12 grid-margin stretch-card">
+							<div class="card text-center" style="background-color: #c97a85!important; border: 0px!important">
+								<div class="card-body" style="margin: -35.5px 0;">
 									
                   <!-- PUT HERE -->
                   <table cellspacing="0" border="0" cellpadding="0">
                       <tr>
                           <td width="500" height="555" class="the_wheel" align="center" valign="center">
+                            <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); bigButton.disabled=false;">&nbsp;&nbsp;&nbsp;</a>
                               <canvas id="canvas" class="tutCanvas" width="500" height="515">Canvas not supported</canvas>
                           </td>
-
-                          <td width="50%">
-                              <button class="btn btn-success" id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;">Spin sekarang !</button>
-                              <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); bigButton.disabled=false;">Reset</a>
-                          </td>
-
                       </tr>
                   </table>
                   <!-- END HERE -->
@@ -90,16 +94,35 @@
 								</div>
 							</div>
 						</div>
+
+            <div class="col-md-6 col-sm-12 grid-margin stretch-card">
+              <div class="card text-center" style="background-color: #c97a85!important; border: 0px!important">
+                <div class="card-body">
+                  
+                  <!-- PUT HERE -->
+                  <table cellspacing="0" border="0" cellpadding="0">
+                      <tr>
+                          <td width="25%" class="btnSpin">
+                              <button class="btn btn-rounded btn-danger" id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;">Spin sekarang !</button>
+                              <!-- <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); bigButton.disabled=false;">Reset</a> -->
+                          </td>
+                      </tr>
+                  </table>
+                  <!-- END HERE -->
+
+                </div>
+              </div>
+            </div>
 						
 					</div>
 					
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../partials/_footer.html -->
-        <footer class="footer" style="margin-top: -50px">
+        <footer class="footer" style="margin-top: -50px; border: 0px!important; background-color: #c97a85!important">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2021 <a href="https://www.emdeeclinic.com/" target="_blank">The Emdee - Skin Clinic</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            <span class="d-block text-center text-sm-left d-sm-inline-block" style="color: white">Copyright © 2021 <!-- <a href="https://www.emdeeclinic.com/" target="_blank"> -->The Emdee - Skin Clinic<!-- </a> -->. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="color: white">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
         </footer>
         <!-- partial -->
@@ -115,7 +138,7 @@
           'outerRadius'       : 200,               // Set outer radius so wheel fits inside the background.
           'drawText'          : true,              // Code drawn text can be used with segment images.
           'textFontSize'      : 16,
-          'centerY'           : 278,
+          'centerY'           : 270,
           'textOrientation'   : 'curved',
           'textAlignment'     : 'inner',
           'textMargin'        : 90,
@@ -168,7 +191,8 @@
       function alertPrize(indicatedSegment)
       {
           // Do basic alert of the segment text.
-          alert("Selamat, kamu dapat " + indicatedSegment.caption);
+          swal("Selamat!", "kamu dapat " + indicatedSegment.caption, "warning");
+          // alert("Selamat, kamu dapat " + indicatedSegment.caption);
       }
    
   </script>
