@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <title>Spinwheel</title>
+        <!-- <link rel="stylesheet" href="main.css" type="text/css" /> -->
+        <script type="text/javascript" src="spinwheel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+        <style type="text/css">
+            /*#prizePointer {
+                position: absolute;
+                left: 203px;
+                top: 5px;
+                z-index: 999;
+            }*/
+            .the_wheel
+            {
+                background-image: url(assets/wheel_back.png);
+                background-position: center;
+                background-repeat: none;
+                z-index: 999;
+            }
+        </style>
+    </head>
+    <body>
+        <div align="center">
+            <table cellspacing="0" border="0" cellpadding="0">
+                <tr>
+                    <td width="500" height="555" class="the_wheel" align="center" valign="center">
+                        <canvas id="canvas" class="tutCanvas" width="500" height="515">Canvas not supported</canvas>
+                    </td>
+
+                    <td width="50%">
+                        <button id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;">Spin the Wheel</button>
+                        <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); bigButton.disabled=false;">Reset</a>
+                    </td>
+                    <!-- <td id="prizePointer"><img id="prizePointer" src="assets/arrow.png" alt="V" /></td> -->
+                </tr>
+            </table>
+        </div>
+        <script>
+            var theWheel = new Winwheel({
+                'numSegments'       : 5,                 // Specify number of segments.
+                'outerRadius'       : 200,               // Set outer radius so wheel fits inside the background.
+                'drawText'          : true,              // Code drawn text can be used with segment images.
+                'textFontSize'      : 16,
+                'centerY'           : 278,
+                'textOrientation'   : 'curved',
+                'textAlignment'     : 'inner',
+                'textMargin'        : 90,
+                'textFontFamily'    : 'monospace',
+                'textStrokeStyle'   : 'black',
+                'textLineWidth'     : 3,
+                'textFillStyle'     : 'white',
+                'drawMode'          : 'segmentImage',    // Must be segmentImage to draw wheel using one image per segemnt.
+                'segments'          :                    // Define segments including image and text.
+                [
+                   {'image' : 'assets/prize1.png', 'caption' : '1 pcs Souvenir Emdee'},
+                   {'image' : 'assets/prize2.png', 'caption' : '1 pcs Gold Bar 0.1 gr'},
+                   {'image' : 'assets/prize3.png', 'caption' : '1 pcs Voucher 50.000'},
+                   {'image' : 'assets/prize4.png', 'caption' : '1 pcs Emdee Lab'},
+                   {'image' : 'assets/prize5.png', 'caption' : '1 pcs Free Voucher Treatment'}
+                ],
+                'animation' :
+                {
+                    'type'          : 'spinToStop',
+                    'duration'      : 5,
+                    'spins'         : 5,
+                    // 'callbackAfter' : 'drawTriangle()',
+                    'callbackFinished' : alertPrize
+                }
+            });
+         
+            // Function with formula to work out stopAngle before spinning animation.
+            // Called from Click of the Spin button.
+            function calculatePrize()
+            {
+                // This formula always makes the wheel stop somewhere inside prize 3 at least
+                // 1 degree away from the start and end edges of the segment.
+                // let stopAt = (30 + Math.floor((Math.random() * 43)))
+                
+                // Important thing is to set the stopAngle of the animation before stating the spin.
+                let stopAt = 0
+                do {
+                    stopAt = Math.floor((Math.random() * 359))
+                }
+                // while ((stopAt > 90 && stopAt < 135) || (stopAt > 315 && stopAt < 360)) // untuk 2 hadiah yang ditolak
+                while (stopAt > 72 && stopAt < 145) // untuk 1 hadiah yang ditolak
+                // console.log(stopAt)
+
+                theWheel.animation.stopAngle = stopAt;
+                
+                // May as well start the spin from here.
+                theWheel.startAnimation();
+                // alert(stopAt);
+            }
+         
+            // Usual pointer drawing code.
+            // drawTriangle();
+
+            // function drawTriangle()
+            // {
+            //     // Get the canvas context the wheel uses.
+            //     let ctx = theWheel.ctx;
+         
+            //     ctx.strokeStyle = 'black';     // Set line colour.
+            //     ctx.fillStyle   = 'grey';     // Set fill colour.
+            //     ctx.lineWidth   = 2;
+            //     ctx.beginPath();              // Begin path.
+            //     ctx.moveTo(230, 5);           // Move to initial position.
+            //     ctx.lineTo(270, 5);           // Draw lines to make the shape.
+            //     ctx.lineTo(250, 40);
+            //     ctx.lineTo(231, 5);
+            //     ctx.stroke();                 // Complete the path by stroking (draw lines).
+            //     ctx.fill();                   // Then fill.
+            // }
+
+            function alertPrize(indicatedSegment)
+            {
+                // Do basic alert of the segment text.
+                alert("Selamat, kamu dapat " + indicatedSegment.caption);
+            }
+         
+        </script>
+    </body>
+</html>
