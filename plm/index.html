@@ -182,8 +182,8 @@
           do {
               stopAt = Math.floor((Math.random() * 359))
           }
-          // while ((stopAt > 90 && stopAt < 135) || (stopAt > 315 && stopAt < 360)) // untuk 2 hadiah yang ditolak
-          while (stopAt > 72 && stopAt < 145) // untuk 1 hadiah yang ditolak
+          while (/*emdeelab 10%*/(stopAt > 223 && stopAt < 290) || /*goldbar 1%*/(stopAt > 72 && stopAt < 144) || /*treatment 2%*/(stopAt > 291 && stopAt < 360)) // untuk lebih dari 1 hadiah yang ditolak
+          // while (stopAt > 72 && stopAt < 146) // untuk 1 hadiah yang ditolak
           // while (stopAt > 360) // untuk bebas hadiah manapun
           // console.log(stopAt)
 
@@ -191,7 +191,7 @@
           
           // May as well start the spin from here.
           theWheel.startAnimation();
-          // alert(stopAt);
+          console.log(stopAt);
       }
 
       function alertPrize(indicatedSegment)
