@@ -29,7 +29,7 @@
       }
       @media only screen and (min-width: 767px) {
         .btnSpin {
-          padding-top: 350px;
+          padding-top: 325px;
         }
       }
       .page-body-wrapper {
@@ -81,7 +81,7 @@
 					
 					<div class="row">
 						
-						<div class="col-md-6 col-sm-12 grid-margin stretch-card">
+						<div class="col-md-6 col-sm-12 grid-margin stretch-card" style="margin-left: -75px;">
 							<div class="card text-center" style="background-color: transparent!important; border: 0px!important">
 								<div class="card-body" style="margin: -35.5px 0;">
 									
@@ -100,7 +100,7 @@
 							</div>
 						</div>
 
-            <div class="col-md-6 col-sm-12 grid-margin stretch-card">
+            <div class="col-md-6 col-sm-12 grid-margin stretch-card" style="margin-left: 75px">
               <div class="card text-center" style="background-color: transparent!important; border: 0px!important">
                 <div class="card-body">
                   
@@ -108,7 +108,7 @@
                   <table cellspacing="0" border="0" cellpadding="0">
                       <tr>
                           <td width="25%" class="btnSpin">
-                              <button class="btn btn-rounded btn-danger" id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;">Spin sekarang !</button>
+                              <button class="btn btn-rounded btn-danger" id='bigButton' class='bigButton' onClick="calculatePrize(); this.disabled=true;" style="margin-left: 40px">Spin sekarang !</button>
                               <!-- <a href="javascript:void(0);" onClick="theWheel.stopAnimation(false); theWheel.rotationAngle=0; theWheel.draw(); bigButton.disabled=false;">Reset</a> -->
                           </td>
                       </tr>
@@ -183,7 +183,7 @@
               stopAt = Math.floor((Math.random() * 359))
           }
           // while ((stopAt > 90 && stopAt < 135) || (stopAt > 315 && stopAt < 360)) // untuk 2 hadiah yang ditolak
-          while (stopAt > 72 && stopAt < 145) // untuk 1 hadiah yang ditolak
+          while (stopAt > 70 && stopAt < 145) // untuk 1 hadiah yang ditolak
           // while (stopAt > 360) // untuk bebas hadiah manapun
           // console.log(stopAt)
 
@@ -191,7 +191,7 @@
           
           // May as well start the spin from here.
           theWheel.startAnimation();
-          // alert(stopAt);
+          // console.log(stopAt);
       }
 
       function alertPrize(indicatedSegment)
